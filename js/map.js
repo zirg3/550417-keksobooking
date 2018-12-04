@@ -43,7 +43,7 @@ var getMixArray = function (array) {
 //  Случайное число
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
+};
 
 var getRandomArray = function (array) {
   var randomArray = Math.floor(Math.random() * array.length);
