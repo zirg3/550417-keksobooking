@@ -51,9 +51,8 @@ var getRandomArray = function (array) {
 };
 
 //  создаю массив
-var appartments = [];
-
 var createAppartments = function (appartmentsQuantity) {
+  var appartments = [];
   for (var i = 0; i < appartmentsQuantity; i++) {
     var location = {
       'x': getRandomNumber(minCoordinateX, maxCoordinateX),
@@ -81,9 +80,10 @@ var createAppartments = function (appartmentsQuantity) {
     };
     appartments.push(appartment);
   }
+  return appartments;
 };
 
-createAppartments(APPARTMENTS_QUANTITY);
+var appartments = createAppartments(APPARTMENTS_QUANTITY);
 
 //  Создаю метки
 var similarListElement = document.querySelector('.map__pins');
@@ -100,15 +100,40 @@ var renderPin = function (appartment) {
   return pinElement;
 };
 
-var fragment = document.createDocumentFragment();
-for (var k = 0; k < appartments.length; k++) {
-  fragment.appendChild(renderPin(appartments[k]));
-}
+var renderPins = function (appart) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < appart.length; i++) {
+    fragment.appendChild(renderPin(appart[i]));
+  }
+  return fragment;
+};
 
-similarListElement.appendChild(fragment);
+similarListElement.appendChild(renderPins(appartments));
 
 var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
+var renderFeatures = function (appartment) {
+  var fragment = document.createDocumentFragment();
+  for (var j = 0; j < appartment.length; j++) {
+    var elementL = document.createElement('li');
+    elementL.className = 'popup__feature popup__feature--' + appartment[j];
+    fragment.appendChild(elementL);
+  }
+  return fragment;
+};
+
+var renderPhoto = function (appartment) {
+  var photosFragment = document.createDocumentFragment();
+  for (var i = 0; i < appartment.length; i++) {
+    var elementI = document.createElement('img');
+    elementI.className = 'popup__photo';
+    elementI.src = appartment[i];
+    elementI.width = 45;
+    elementI.height = 40;
+    photosFragment.appendChild(elementI);
+  }
+  return photosFragment;
+};
 //  пишу функцию для генерации карточки
 var renderCard = function (appartment) {
   var cardElement = similarCardTemplate.cloneNode(true);
@@ -121,24 +146,9 @@ var renderCard = function (appartment) {
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
   cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
   cardElement.querySelector('.popup__features').innerHTML = '';
-  for (var j = 0; j < appartment.offer.features.length; j++) {
-    var elementL = document.createElement('li');
-    elementL.className = 'popup__feature popup__feature--' + appartment.offer.features[j];
-    cardElement.querySelector('.popup__features').appendChild(elementL);
-  }
-
+  cardElement.querySelector('.popup__features').appendChild(renderFeatures(appartment.offer.features));
   cardElement.querySelector('.popup__photos').innerHTML = '';
-  var photosList = cardElement.querySelector('.popup__photos');
-  var photosFragment = document.createDocumentFragment();
-  for (var i = 0; i < appartment.offer.photos.length; i++) {
-    var elementI = document.createElement('img');
-    elementI.className = 'popup__photo';
-    elementI.src = appartment.offer.photos[i];
-    elementI.width = 45;
-    elementI.height = 40;
-    photosFragment.appendChild(elementI);
-  }
-  photosList.appendChild(photosFragment);
+  cardElement.querySelector('.popup__photos').appendChild(renderPhoto(appartment.offer.photos));
 
   return cardElement;
 };
