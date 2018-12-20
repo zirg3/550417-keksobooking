@@ -159,8 +159,8 @@ var map = document.querySelector('.map');
 //  Выключает формы
 var formElements = document.querySelectorAll('fieldset');
 var formDisabled = function () {
-  for (var j = 0; j < formElements.length; j++) {
-    formElements[j].disabled = true;
+  for (var i = 0; i < formElements.length; i++) {
+    formElements[i].disabled = true;
   }
 };
 formDisabled();
@@ -173,6 +173,7 @@ var setAddressCoords = function (left, top) {
   var inputAdress = document.querySelector('#address');
   inputAdress.value = left + ', ' + top;
 };
+
 //  Активация карты
 var activatedMap = function () {
   map.classList.remove('map--faded');
@@ -182,7 +183,7 @@ var activatedMap = function () {
   }
   similarListElement.appendChild(renderPins(appartments));
   setAddressCoords(MAP_WIDTH / 2, MAP_HEIGHT / 2);
-  addPinsClick();
+  addPinsHandler();
 };
 
 // Пин в отпуске
@@ -191,52 +192,49 @@ mainPin.addEventListener('mouseup', function () {
 });
 
 // Информация о иных
-var closeOpenedCard = function () {
+var closeCard = function () {
   var mapCard = document.querySelector('.map__card');
   map.removeChild(mapCard);
 };
 
-var workСard = function (pinId) {
+var doJobCard = function (pinId) {
   var elementAvailable = document.querySelector('.map__card');
   if (elementAvailable) {
-    closeOpenedCard();
+    closeCard();
   }
   var addCard = renderCard(appartments[pinId]);
   map.insertBefore(addCard, filter);
 };
 
 // Клик закрытие
-var closeClick = function () {
+var closePopupBtn = function () {
   var popupClose = document.querySelector('.popup__close');
   popupClose.addEventListener('click', function () {
-    closeOpenedCard();
+    closeCard();
   });
 };
 
-var addPinsClick = function () {
+var addPinsHandler = function () {
   var pins = similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
   for (var i = 0; i < pins.length; i++) {
     pins[i].addEventListener('click', function (evt) {
       var button = evt.currentTarget;
       var pinId = button.getAttribute('data-id');
-      workСard(pinId);
-      closeClick();
+      doJobCard(pinId);
+      closePopupBtn();
     });
   }
 };
 
 //  Активация и закрытие по клавишам
-var controlKey = function () {
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER__KEY) {
-      activatedMap();
-    }
-  });
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER__KEY) {
+    activatedMap();
+  }
+});
 
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC__KEY) {
-      closeOpenedCard();
-    }
-  });
-};
-controlKey();
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC__KEY) {
+    closeCard();
+  }
+});
