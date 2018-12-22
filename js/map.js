@@ -51,9 +51,9 @@ var getRandomArray = function (array) {
 };
 
 //  создаю массив
-var createAppartments = function (appartmentsQuantity) {
+var createAppartments = function (appartmentsCount) {
   var appartments = [];
-  for (var i = 0; i < appartmentsQuantity; i++) {
+  for (var i = 0; i < appartmentsCount; i++) {
     var location = {
       'x': getRandomNumber(minCoordinateX, maxCoordinateX),
       'y': getRandomNumber(minCoordinateY, maxCoordinateY)
@@ -86,7 +86,7 @@ var createAppartments = function (appartmentsQuantity) {
 var appartments = createAppartments(APPARTMENTS_QUANTITY);
 
 //  Создаю метки
-var similarListElement = document.querySelector('.map__pins');
+var pin = document.querySelector('.map__pins');
 var similarPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
 var renderPin = function (appartment, index) {
@@ -112,10 +112,10 @@ var similarCardTemplate = document.querySelector('#card').content.querySelector(
 
 var renderFeatures = function (appartment) {
   var fragment = document.createDocumentFragment();
-  for (var j = 0; j < appartment.length; j++) {
-    var elementL = document.createElement('li');
-    elementL.className = 'popup__feature popup__feature--' + appartment[j];
-    fragment.appendChild(elementL);
+  for (var i = 0; i < appartment.length; i++) {
+    var element = document.createElement('li');
+    element.className = 'popup__feature popup__feature--' + appartment[i];
+    fragment.appendChild(element);
   }
   return fragment;
 };
@@ -123,12 +123,12 @@ var renderFeatures = function (appartment) {
 var renderPhoto = function (appartment) {
   var photosFragment = document.createDocumentFragment();
   for (var i = 0; i < appartment.length; i++) {
-    var elementI = document.createElement('img');
-    elementI.className = 'popup__photo';
-    elementI.src = appartment[i];
-    elementI.width = 45;
-    elementI.height = 40;
-    photosFragment.appendChild(elementI);
+    var image = document.createElement('img');
+    image.className = 'popup__photo';
+    image.src = appartment[i];
+    image.width = 45;
+    image.height = 40;
+    photosFragment.appendChild(image);
   }
   return photosFragment;
 };
@@ -153,17 +153,17 @@ var renderCard = function (appartment) {
   return cardElement;
 };
 
-var filter = document.querySelector('.map__filters-container');
+// var filter = document.querySelector('.map__filters-container');
 var map = document.querySelector('.map');
 
 //  Выключает формы
 var formElements = document.querySelectorAll('fieldset');
-var formDisabled = function () {
+var disabledForm = function () {
   for (var i = 0; i < formElements.length; i++) {
     formElements[i].disabled = true;
   }
 };
-formDisabled();
+disabledForm();
 
 var mainPin = document.querySelector('.map__pin--main');
 var mainForm = document.querySelector('.ad-form');
@@ -181,7 +181,7 @@ var activatedMap = function () {
   for (var i = 0; i < formElements.length; i++) {
     formElements[i].disabled = false;
   }
-  similarListElement.appendChild(renderPins(appartments));
+  pin.appendChild(renderPins(appartments));
   setAddressCoords(MAP_WIDTH / 2, MAP_HEIGHT / 2);
   addPinsHandler();
 };
@@ -197,13 +197,12 @@ var closeCard = function () {
   map.removeChild(mapCard);
 };
 
-var doJobCard = function (pinId) {
-  var elementAvailable = document.querySelector('.map__card');
-  if (elementAvailable) {
+var openPopup = function (data) {
+  var mapCard = document.querySelector('.map__card');
+  if (mapCard) {
     closeCard();
   }
-  var addCard = renderCard(appartments[pinId]);
-  map.insertBefore(addCard, filter);
+  map.insertBefore(renderCard(data), map.querySelector('popup'));
 };
 
 // Клик закрытие
@@ -215,12 +214,12 @@ var closePopupBtn = function () {
 };
 
 var addPinsHandler = function () {
-  var pins = similarListElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+  var pins = pin.querySelectorAll('.map__pin:not(.map__pin--main)');
   for (var i = 0; i < pins.length; i++) {
     pins[i].addEventListener('click', function (evt) {
       var button = evt.currentTarget;
       var pinId = button.getAttribute('data-id');
-      doJobCard(pinId);
+      openPopup(appartments[pinId]);
       closePopupBtn();
     });
   }
@@ -229,7 +228,7 @@ var addPinsHandler = function () {
 //  Активация и закрытие по клавишам
 document.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ENTER__KEY) {
-    activatedMap();
+    addPinsHandler();
   }
 });
 
