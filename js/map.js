@@ -317,10 +317,10 @@ var roomsAndPlaces = function () {
           capacityOptions[3].disabled = true;
           break;
         case '100':
-        capacityOptions[0].disabled = true;
-        capacityOptions[1].disabled = true;
-        capacityOptions[2].disabled = true;
-        capacityOptions[3].selected = true;
+          capacityOptions[0].disabled = true;
+          capacityOptions[1].disabled = true;
+          capacityOptions[2].disabled = true;
+          capacityOptions[3].selected = true;
           break;
       }
     }
