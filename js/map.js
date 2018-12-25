@@ -153,7 +153,7 @@ var renderCard = function (appartment) {
   return cardElement;
 };
 
-// var filter = document.querySelector('.map__filters-container');-----------------------------
+// ------------------------------------------------------
 var map = document.querySelector('.map');
 
 //  Выключает формы
@@ -281,9 +281,9 @@ var synchPrice = function () {
       return;
   }
 };
-synchPrice();
 
 typeHous.addEventListener('input', synchPrice);
+
 // Комнаты-места
 var inputCapacity = document.querySelector('#capacity');
 var inputRoomNumber = document.querySelector('#room_number');
@@ -327,7 +327,6 @@ var roomsAndPlaces = function () {
   }
 };
 roomsAndPlaces();
-
 
 inputRoomNumber.addEventListener('change', roomsAndPlaces);
 
