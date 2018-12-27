@@ -22,7 +22,7 @@
     return array[randomArray];
   };
 
-  window.other = {
+  window.utils = {
     getMixArray: getMixArray,
     getRandomNumber: getRandomNumber,
     getRandomArray: getRandomArray

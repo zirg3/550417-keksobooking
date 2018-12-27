@@ -25,9 +25,9 @@
   var maxCoordinateX = 1200;
   var minCoordinateY = 130;
   var maxCoordinateY = 630;
-  var getMixArray = window.other.getMixArray;
-  var getRandomNumber = window.other.getRandomNumber;
-  var getRandomArray = window.other.getRandomArray;
+  var getMixArray = window.utils.getMixArray;
+  var getRandomNumber = window.utils.getRandomNumber;
+  var getRandomArray = window.utils.getRandomArray;
 
   //  создаю массив
   var createAppartments = function (appartmentsCount) {
