@@ -22,8 +22,6 @@ var MAX_PRICE = 1000000;
 var APPARTMENTS_QUANTITY = 8;
 var ENTER__KEY = 13;
 var ESC__KEY = 27;
-var MAP_WIDTH = 1150;
-var MAP_HEIGHT = 750;
 var minCoordinateX = 1;
 var maxCoordinateX = 1200;
 var minCoordinateY = 130;
@@ -167,12 +165,7 @@ disabledForm();
 
 var mainPin = document.querySelector('.map__pin--main');
 var mainForm = document.querySelector('.ad-form');
-
-//  Координаты
-var setAddressCoords = function (left, top) {
-  var inputAdress = document.querySelector('#address');
-  inputAdress.value = left + ', ' + top;
-};
+var address = document.querySelector('#address');
 
 //  Активация карты
 var activatedMap = function () {
@@ -182,14 +175,8 @@ var activatedMap = function () {
     formElements[i].disabled = false;
   }
   pin.appendChild(renderPins(appartments));
-  setAddressCoords(MAP_WIDTH / 2, MAP_HEIGHT / 2);
   addPinsHandler();
 };
-
-// Пин в отпуске
-mainPin.addEventListener('mouseup', function () {
-  activatedMap();
-});
 
 // Информация о иных
 var closeCard = function () {
@@ -340,4 +327,64 @@ timein.addEventListener('change', function (evt) {
 
 timeout.addEventListener('change', function (evt) {
   timein.value = evt.target.value;
+});
+
+// Drag-and-drop---------------------------------------------------------------------------
+var MIN_X = 0;
+var MAX_X = 1150;
+var MIN_Y = 130;
+var MAX_Y = 630;
+
+var setsAddressValue = function () {
+  var pinCenterAddress = {
+    x: parseInt(mainPin.style.left, 10),
+    y: parseInt(mainPin.style.top, 10)
+  };
+
+  address.value = pinCenterAddress.x + ', ' + pinCenterAddress.y;
+};
+
+mainPin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+  activatedMap();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    var topY = mainPin.offsetTop - shift.y;
+    var leftX = mainPin.offsetLeft - shift.x;
+
+    if (topY < MAX_Y && topY > MIN_Y) {
+      mainPin.style.top = topY + 'px';
+    }
+
+    if (leftX < MAX_X && leftX > MIN_X) {
+      mainPin.style.left = leftX + 'px';
+    }
+    setsAddressValue();
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+    setsAddressValue();
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
