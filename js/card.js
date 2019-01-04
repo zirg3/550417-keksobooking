@@ -1,7 +1,13 @@
 'use strict';
 (function () {
-  var APPARTMENT_TYPES = window.data.APPARTMENT_TYPES;
-  var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+  var APPARTMENT_TYPES = {
+    flat: 'Квартира',
+    bungalo: 'Бунгало',
+    house: 'Дом',
+    palace: 'Дворец'
+  };
+
+  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   var renderFeatures = function (appartment) {
     var fragment = document.createDocumentFragment();
@@ -26,11 +32,9 @@
     return photosFragment;
   };
 
-  //  пишу функцию для генерации карточки
   var renderCard = function (appartment) {
-    var cardElement = similarCardTemplate.cloneNode(true);
+    var cardElement = cardTemplate.cloneNode(true);
 
-    cardElement.querySelector('.popup__avatar').src = appartment.author;
     cardElement.querySelector('.popup__title').textContent = appartment.offer.title;
     cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
     cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + '₽/ночь';
@@ -46,7 +50,5 @@
     return cardElement;
   };
 
-  window.card = {
-    renderCard: renderCard
-  };
+  window.renderCard = renderCard;
 })();

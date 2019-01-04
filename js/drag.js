@@ -1,16 +1,21 @@
 'use strict';
 
 (function () {
+  var mainPin = document.querySelector('.map__pin--main');
+  var address = document.querySelector('#address');
 
   // Drag-and-drop
   var MIN_X = 0;
   var MAX_X = 1150;
   var MIN_Y = 130;
   var MAX_Y = 630;
-  var mainPin = window.map.mainPin;
-  var activatedMap = window.map.activatedMap;
-  var address = window.map.address;
 
+  var onSuccess = function (data) {
+    window.data.pins = data;
+    window.map.renderPins(data);
+  };
+
+  // Координаты
   var setsAddressValue = function () {
     var pinCenterAddress = {
       x: parseInt(mainPin.style.left, 10),
@@ -22,7 +27,7 @@
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-    activatedMap();
+    window.map.activatedMap();
 
     var startCoords = {
       x: evt.clientX,
@@ -58,6 +63,8 @@
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       setsAddressValue();
+      window.backend.load(onSuccess, window.utils.onError);
+
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
