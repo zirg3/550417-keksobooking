@@ -6,7 +6,6 @@
     house: 'Дом',
     palace: 'Дворец'
   };
-
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   var renderFeatures = function (appartment) {
@@ -32,20 +31,103 @@
     return photosFragment;
   };
 
+  var renderTitle = function (title, card) {
+    var titleElement = card.querySelector('.popup__title');
+    if (title.length !== 0) {
+      titleElement.textContent = title;
+    } else {
+      titleElement.remove();
+    }
+  };
+
+  var renderAddress = function (address, card) {
+    var adressElement = card.querySelector('.popup__text--address');
+    if (address.length !== 0) {
+      adressElement.textContent = address;
+    } else {
+      adressElement.remove();
+    }
+  };
+
+  var renderPrice = function (price, card) {
+    var priceElement = card.querySelector('.popup__text--price');
+    if (price.length !== 0) {
+      priceElement.textContent = price + ' ₽/' + 'ночь';
+    } else {
+      priceElement.remove();
+    }
+  };
+
+  var renderType = function (type, card) {
+    var typeElement = card.querySelector('.popup__type');
+    if (type.length !== 0) {
+      typeElement.textContent = type;
+    } else {
+      typeElement.remove();
+    }
+  };
+
+  var renderDescription = function (description, card) {
+    var descriptionElement = card.querySelector('.popup__description');
+    if (description.length !== 0) {
+      descriptionElement.textContent = description;
+    } else {
+      descriptionElement.remove();
+    }
+  };
+
+  var renderPhotos = function (photos, card) {
+    var photosListElement = card.querySelector('.popup__photos');
+    if (photos.length !== 0) {
+      photosListElement.textContent = '';
+      photosListElement.appendChild(renderPhoto(photos));
+    } else {
+      photosListElement.remove();
+    }
+  };
+
+  var renderAvatar = function (avatar, card) {
+    var avatarElement = card.querySelector('.popup__avatar');
+    if (avatar.length !== 0) {
+      avatarElement.src = avatar;
+    } else {
+      avatarElement.remove();
+    }
+  };
+
+  var renderFeature = function (features, card) {
+    var featuresList = card.querySelector('.popup__features');
+    if (features.length !== 0) {
+      featuresList.textContent = '';
+      featuresList.appendChild(renderFeatures(features));
+    } else {
+      featuresList.remove();
+    }
+  };
+
   var renderCard = function (appartment) {
     var cardElement = cardTemplate.cloneNode(true);
 
-    cardElement.querySelector('.popup__title').textContent = appartment.offer.title;
-    cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
-    cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + '₽/ночь';
-    cardElement.querySelector('.popup__type').textContent = APPARTMENT_TYPES[appartment.offer.type];
-    cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
-    cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
-    cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
-    cardElement.querySelector('.popup__features').innerHTML = '';
-    cardElement.querySelector('.popup__features').appendChild(renderFeatures(appartment.offer.features));
-    cardElement.querySelector('.popup__photos').innerHTML = '';
-    cardElement.querySelector('.popup__photos').appendChild(renderPhoto(appartment.offer.photos));
+    renderTitle(appartment.offer.title, cardElement);
+    renderAddress(appartment.offer.address, cardElement);
+    renderPrice(appartment.offer.price, cardElement);
+    renderType(APPARTMENT_TYPES[appartment.offer.type], cardElement);
+    renderDescription(appartment.offer.description, cardElement);
+    renderPhotos(appartment.offer.photos, cardElement);
+    renderAvatar(appartment.author.avatar, cardElement);
+    renderFeature(appartment.offer.features, cardElement);
+
+    if (appartment.offer.rooms === 0 && appartment.offer.guests === 0) {
+      cardElement.querySelector('.popup__text--capacity').remove();
+    } else {
+      cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
+    }
+
+    if (appartment.offer.checkin === 0 && appartment.offer.checkout === 0) {
+      cardElement.querySelector('.popup__text--time').remove();
+    } else {
+      cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
+    }
 
     return cardElement;
   };

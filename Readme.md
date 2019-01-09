@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Виталий Лазарчук](https://up.htmlacademy.ru/javascript/16/user/550417).
-* Наставник: [Екатерина Кащенко](https://up.htmlacademy.ru/javascript/16/user/109008).
+* Наставник: [].
 
 ---
 

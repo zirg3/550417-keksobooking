@@ -19,7 +19,6 @@
     var modalError = document.querySelector('.error');
     document.querySelector('main').removeChild(modalError);
     document.removeEventListener('keydown', closeErrorMessage);
-    modalError.removeEventListener('click', closeErrorMessage);
   };
 
   window.utils = {

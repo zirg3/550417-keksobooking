@@ -1,5 +1,7 @@
 'use strict';
 (function () {
+  var form = document.querySelector('.ad-form');
+  var formReset = form.querySelector('.ad-form__reset');
 
   // Тип - плата
   var inputPrice = document.querySelector('#price');
@@ -105,9 +107,8 @@
     timein.value = evt.target.value;
   });
 
-  var form = document.querySelector('.ad-form');
-
   var onSuccessSubmit = function () {
+    window.drag.deactivation();
     var success = document.querySelector('#success').content.querySelector('.success');
     var successElement = success.cloneNode(true);
     document.querySelector('main').appendChild(successElement);
@@ -126,5 +127,10 @@
 
     window.backend.save(new FormData(form), onSuccessSubmit, window.utils.onError);
     evt.preventDefault();
+  });
+
+  formReset.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.drag.deactivation();
   });
 })();
