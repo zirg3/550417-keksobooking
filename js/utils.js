@@ -1,5 +1,17 @@
 'use strict';
 (function () {
+  var DEBOUNCE = 500; // ms
+
+  var debounce = function (cb) {
+    var lastTimeout;
+
+    return function () {
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(cb, DEBOUNCE);
+    };
+  };
 
   var onError = function (message) {
     var error = document.querySelector('#error').content.querySelector('.error');
@@ -22,6 +34,7 @@
   };
 
   window.utils = {
+    debounce: debounce,
     onError: onError
   };
 })();

@@ -3,6 +3,7 @@
   var ESC_KEY = 27;
   var map = document.querySelector('.map');
   var pins = document.querySelector('.map__pins');
+  var PINS_COUNT = 5;
 
   // Клик закрытие
   var closePopupBtn = function () {
@@ -28,8 +29,9 @@
   // Рендер меток
   var renderPins = function (dataArray) {
     var fragment = document.createDocumentFragment();
+    var slicedArray = dataArray.slice(0, PINS_COUNT);
 
-    dataArray.forEach(function (elementOfArray) {
+    slicedArray.forEach(function (elementOfArray) {
       if (elementOfArray.offer) {
         var newPin = window.createPin(elementOfArray, function () {
           closeOpenedPopup();
