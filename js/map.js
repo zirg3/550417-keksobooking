@@ -37,8 +37,8 @@
           var card = window.renderCard(elementOfArray);
           showCard(card);
         });
+        fragment.appendChild(newPin);
       }
-      fragment.appendChild(newPin);
     });
     pins.appendChild(fragment);
   };

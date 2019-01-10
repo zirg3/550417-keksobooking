@@ -6,7 +6,6 @@
   var housingRooms = filtersForm.querySelector('#housing-rooms');
   var housingGuests = filtersForm.querySelector('#housing-guests');
   var housingFeatures = filtersForm.querySelectorAll('.map__checkbox');
-
   var priceRooms = {
     min: 10000,
     max: 50000

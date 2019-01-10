@@ -31,15 +31,6 @@
     return photosFragment;
   };
 
-  var renderDescription = function (description, card) {
-    var descriptionElement = card.querySelector('.popup__description');
-    if (!description.length == 0) {
-      descriptionElement.textContent = description;
-    } else {
-      descriptionElement.remove();
-    }
-  };
-
   var renderPhotos = function (photos, card) {
     var photosListElement = card.querySelector('.popup__photos');
     if (photos.length !== 0) {
@@ -77,21 +68,15 @@
     cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + '₽/ночь';
     cardElement.querySelector('.popup__type').textContent = APPARTMENT_TYPES[appartment.offer.type];
     cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
-    renderDescription(appartment.offer.description, cardElement);
+    cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
     renderPhotos(appartment.offer.photos, cardElement);
     renderAvatar(appartment.author.avatar, cardElement);
     renderFeature(appartment.offer.features, cardElement);
 
-    if (appartment.offer.rooms === 0 && appartment.offer.guests === 0) {
-      cardElement.querySelector('.popup__text--capacity').remove();
+    if (!appartment.offer.description.length) {
+      cardElement.querySelector('.popup__description').remove();
     } else {
-      cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
-    }
-
-    if (appartment.offer.checkin === 0 && appartment.offer.checkout === 0) {
-      cardElement.querySelector('.popup__text--time').remove();
-    } else {
-      cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + appartment.offer.checkin + ',' + ' выезд до ' + appartment.offer.checkout;
+      cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
     }
 
     return cardElement;
