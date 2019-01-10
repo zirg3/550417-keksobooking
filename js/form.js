@@ -133,4 +133,6 @@
     evt.preventDefault();
     window.drag.deactivation();
   });
+
+  window.roomsAndPlaces = roomsAndPlaces;
 })();
