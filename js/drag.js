@@ -103,8 +103,7 @@
 
       if (data.length === 0) {
         window.backend.load(onSuccess, window.utils.onError);
-      }
-      if (data.length !== 0) {
+      } else {
         window.map.renderPins(data);
       }
 
