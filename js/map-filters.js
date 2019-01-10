@@ -1,5 +1,4 @@
 'use strict';
-
 (function () {
   var filtersForm = document.querySelector('.map__filters');
   var housingType = filtersForm.querySelector('#housing-type');

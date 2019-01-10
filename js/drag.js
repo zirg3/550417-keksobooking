@@ -96,11 +96,17 @@
       setsAddressValue();
     };
 
+    var data = window.data.pins;
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-
       setsAddressValue();
-      window.backend.load(onSuccess, window.utils.onError);
+
+      if (data.length === 0) {
+        window.backend.load(onSuccess, window.utils.onError);
+      }
+      if (data.length !== 0) {
+        window.map.renderPins(data);
+      }
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
