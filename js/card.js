@@ -31,45 +31,9 @@
     return photosFragment;
   };
 
-  var renderTitle = function (title, card) {
-    var titleElement = card.querySelector('.popup__title');
-    if (title.length !== 0) {
-      titleElement.textContent = title;
-    } else {
-      titleElement.remove();
-    }
-  };
-
-  var renderAddress = function (address, card) {
-    var adressElement = card.querySelector('.popup__text--address');
-    if (address.length !== 0) {
-      adressElement.textContent = address;
-    } else {
-      adressElement.remove();
-    }
-  };
-
-  var renderPrice = function (price, card) {
-    var priceElement = card.querySelector('.popup__text--price');
-    if (price.length !== 0) {
-      priceElement.textContent = price + ' ₽/' + 'ночь';
-    } else {
-      priceElement.remove();
-    }
-  };
-
-  var renderType = function (type, card) {
-    var typeElement = card.querySelector('.popup__type');
-    if (type.length !== 0) {
-      typeElement.textContent = type;
-    } else {
-      typeElement.remove();
-    }
-  };
-
   var renderDescription = function (description, card) {
     var descriptionElement = card.querySelector('.popup__description');
-    if (description.length !== 0) {
+    if (!description.length == 0) {
       descriptionElement.textContent = description;
     } else {
       descriptionElement.remove();
@@ -108,10 +72,11 @@
   var renderCard = function (appartment) {
     var cardElement = cardTemplate.cloneNode(true);
 
-    renderTitle(appartment.offer.title, cardElement);
-    renderAddress(appartment.offer.address, cardElement);
-    renderPrice(appartment.offer.price, cardElement);
-    renderType(APPARTMENT_TYPES[appartment.offer.type], cardElement);
+    cardElement.querySelector('.popup__title').textContent = appartment.offer.title;
+    cardElement.querySelector('.popup__text--address').textContent = appartment.offer.address;
+    cardElement.querySelector('.popup__text--price').textContent = appartment.offer.price + '₽/ночь';
+    cardElement.querySelector('.popup__type').textContent = APPARTMENT_TYPES[appartment.offer.type];
+    cardElement.querySelector('.popup__text--capacity').textContent = appartment.offer.rooms + ' комнаты для ' + appartment.offer.guests + ' гостей';
     renderDescription(appartment.offer.description, cardElement);
     renderPhotos(appartment.offer.photos, cardElement);
     renderAvatar(appartment.author.avatar, cardElement);

@@ -30,7 +30,6 @@
   var renderPins = function (dataArray) {
     var fragment = document.createDocumentFragment();
     var slicedArray = dataArray.slice(0, PINS_COUNT);
-
     slicedArray.forEach(function (elementOfArray) {
       if (elementOfArray.offer) {
         var newPin = window.createPin(elementOfArray, function () {

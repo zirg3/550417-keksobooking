@@ -61,7 +61,7 @@
     }
   };
 
-  var roomsAndPlaces = function () {
+  var synchRoomsAndPlaces = function () {
     synch();
     for (var i = 0; i < roomNumberOptions.length; i++) {
       if (roomNumberOptions[i].selected === true) {
@@ -91,9 +91,9 @@
       }
     }
   };
-  roomsAndPlaces();
+  synchRoomsAndPlaces();
 
-  inputRoomNumber.addEventListener('change', roomsAndPlaces);
+  inputRoomNumber.addEventListener('change', synchRoomsAndPlaces);
 
   // Время заезда и выезда
   var timein = document.querySelector('#timein');
@@ -134,5 +134,5 @@
     window.drag.deactivation();
   });
 
-  window.roomsAndPlaces = roomsAndPlaces;
+  window.synchRoomsAndPlaces = synchRoomsAndPlaces;
 })();

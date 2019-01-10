@@ -58,7 +58,7 @@
     mainPin.style.left = PIN_COORD_X + 'px';
     mainPin.style.top = PIN_COORD_Y + 'px';
     form.reset();
-    window.roomsAndPlaces();
+    window.synchRoomsAndPlaces();
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
