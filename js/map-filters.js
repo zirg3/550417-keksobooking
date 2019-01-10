@@ -68,7 +68,7 @@
     return true;
   };
 
-  var fulterPins = function () {
+  var filterPins = function () {
     var newData = window.data.pins;
     var filteredArray = newData.filter(function (data) {
       return getChangeType(data) && getFiltredPrice(data) && getChangeRooms(data) && getChangeGuests(data) && getChangeFeature(data);
@@ -79,5 +79,5 @@
   };
 
   filtersForm.addEventListener('change', window.map.closeOpenedPopup);
-  filtersForm.addEventListener('change', window.utils.debounce(fulterPins));
+  filtersForm.addEventListener('change', window.utils.debounce(filterPins));
 })();
