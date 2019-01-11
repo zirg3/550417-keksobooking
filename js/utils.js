@@ -1,30 +1,40 @@
 'use strict';
 (function () {
+  var DEBOUNCE = 500; // ms
 
-  //  Перемешивает массив с изоображениями
-  var getMixArray = function (array) {
-    for (var i = array.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var x = array[i];
-      array[i] = array[j];
-      array[j] = x;
-    }
-    return array;
+  var debounce = function (cb) {
+    var lastTimeout;
+
+    return function () {
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(cb, DEBOUNCE);
+    };
   };
 
-  //  Случайное число
-  var getRandomNumber = function (min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  var onError = function (message) {
+    var error = document.querySelector('#error').content.querySelector('.error');
+    var errorElement = error.cloneNode(true);
+    var errorMessage = errorElement.querySelector('.error__message');
+    var errorBtn = errorElement.querySelector('.error__button');
+
+    errorMessage.textContent = message;
+
+    document.querySelector('main').insertAdjacentElement('afterbegin', errorElement);
+    document.addEventListener('keydown', closeErrorMessage);
+    errorElement.addEventListener('click', closeErrorMessage);
+    errorBtn.addEventListener('click', closeErrorMessage);
   };
 
-  var getRandomArray = function (array) {
-    var randomArray = Math.floor(Math.random() * array.length);
-    return array[randomArray];
+  var closeErrorMessage = function () {
+    var modalError = document.querySelector('.error');
+    document.querySelector('main').removeChild(modalError);
+    document.removeEventListener('keydown', closeErrorMessage);
   };
 
   window.utils = {
-    getMixArray: getMixArray,
-    getRandomNumber: getRandomNumber,
-    getRandomArray: getRandomArray
+    debounce: debounce,
+    onError: onError
   };
 })();

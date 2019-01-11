@@ -1,5 +1,7 @@
 'use strict';
 (function () {
+  var form = document.querySelector('.ad-form');
+  var formReset = form.querySelector('.ad-form__reset');
 
   // Тип - плата
   var inputPrice = document.querySelector('#price');
@@ -59,7 +61,7 @@
     }
   };
 
-  var roomsAndPlaces = function () {
+  var synchRoomsAndPlaces = function () {
     synch();
     for (var i = 0; i < roomNumberOptions.length; i++) {
       if (roomNumberOptions[i].selected === true) {
@@ -89,9 +91,9 @@
       }
     }
   };
-  roomsAndPlaces();
+  synchRoomsAndPlaces();
 
-  inputRoomNumber.addEventListener('change', roomsAndPlaces);
+  inputRoomNumber.addEventListener('change', synchRoomsAndPlaces);
 
   // Время заезда и выезда
   var timein = document.querySelector('#timein');
@@ -104,4 +106,33 @@
   timeout.addEventListener('change', function (evt) {
     timein.value = evt.target.value;
   });
+
+  var onSuccessSubmit = function () {
+    window.drag.deactivation();
+    var success = document.querySelector('#success').content.querySelector('.success');
+    var successElement = success.cloneNode(true);
+    document.querySelector('main').appendChild(successElement);
+    document.addEventListener('keydown', closeSuccessMessage);
+    successElement.addEventListener('click', closeSuccessMessage);
+  };
+
+  var closeSuccessMessage = function () {
+    var modalSucces = document.querySelector('.success');
+    document.querySelector('main').removeChild(modalSucces);
+    document.removeEventListener('keydown', closeSuccessMessage);
+    modalSucces.removeEventListener('click', closeSuccessMessage);
+  };
+
+  form.addEventListener('submit', function (evt) {
+
+    window.backend.save(new FormData(form), onSuccessSubmit, window.utils.onError);
+    evt.preventDefault();
+  });
+
+  formReset.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.drag.deactivation();
+  });
+
+  window.synchRoomsAndPlaces = synchRoomsAndPlaces;
 })();
