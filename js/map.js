@@ -41,6 +41,7 @@
       }
     });
     pins.appendChild(fragment);
+    window.drag.filtersEnabled();
   };
 
   document.addEventListener('keydown', function (evt) {

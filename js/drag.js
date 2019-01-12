@@ -120,10 +120,8 @@
 
       if (data.length === 0) {
         window.backend.load(onSuccess, window.utils.onError);
-        filtersEnabled();
       } else {
         window.mapfilters.filterPins();
-        filtersEnabled();
       }
 
       document.removeEventListener('mousemove', onMouseMove);
@@ -134,6 +132,7 @@
   });
 
   window.drag = {
+    filtersEnabled: filtersEnabled,
     deactivation: deactivation
   };
 })();
