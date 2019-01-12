@@ -38,6 +38,19 @@
   };
   disabledForm();
 
+  var filtersDisabled = function () {
+    for (var i = 0; i < filtersForm.length; i++) {
+      filtersForm[i].disabled = true;
+    }
+  };
+  filtersDisabled();
+
+  var filtersEnabled = function () {
+    for (var i = 0; i < filtersForm.length; i++) {
+      filtersForm[i].disabled = false;
+    }
+  };
+
   //  Активация карты
   var mainForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
@@ -54,6 +67,7 @@
     map.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
     disabledForm();
+    filtersDisabled();
     window.map.removePins();
     window.map.closeOpenedPopup();
     mainPin.style.left = PIN_COORD_X + 'px';
@@ -106,8 +120,10 @@
 
       if (data.length === 0) {
         window.backend.load(onSuccess, window.utils.onError);
+        filtersEnabled();
       } else {
         window.mapfilters.filterPins();
+        filtersEnabled();
       }
 
       document.removeEventListener('mousemove', onMouseMove);
