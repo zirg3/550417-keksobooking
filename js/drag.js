@@ -107,7 +107,6 @@
       if (data.length === 0) {
         window.backend.load(onSuccess, window.utils.onError);
       } else {
-        window.map.renderPins(data);
         window.mapfilters.filterPins();
       }
 
