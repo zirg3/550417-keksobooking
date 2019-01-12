@@ -4,6 +4,7 @@
   var mainPin = document.querySelector('.map__pin--main');
   var address = document.querySelector('#address');
   var form = document.querySelector('.ad-form');
+  var filtersForm = document.querySelector('.map__filters');
   var PIN_COORD_X = 570;
   var PIN_COORD_Y = 375;
 
@@ -58,6 +59,8 @@
     mainPin.style.left = PIN_COORD_X + 'px';
     mainPin.style.top = PIN_COORD_Y + 'px';
     form.reset();
+    filtersForm.reset();
+    document.documentElement.scrollTop = 0;
     window.synchRoomsAndPlaces();
   };
 
@@ -105,6 +108,7 @@
         window.backend.load(onSuccess, window.utils.onError);
       } else {
         window.map.renderPins(data);
+        window.mapfilters.filterPins();
       }
 
       document.removeEventListener('mousemove', onMouseMove);
