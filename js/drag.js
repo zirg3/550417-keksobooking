@@ -43,7 +43,7 @@
       filtersForm[i].disabled = flag;
     }
   };
-toggleDisableAndEnableFilter(true);
+  toggleDisableAndEnableFilter(true);
 
   //  Активация карты
   var mainForm = document.querySelector('.ad-form');
