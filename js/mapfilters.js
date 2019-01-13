@@ -79,4 +79,8 @@
 
   filtersForm.addEventListener('change', window.map.closeOpenedPopup);
   filtersForm.addEventListener('change', window.utils.debounce(filterPins));
+
+  window.mapfilters = {
+    filterPins: filterPins
+  };
 })();
