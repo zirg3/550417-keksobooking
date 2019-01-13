@@ -67,7 +67,6 @@
     map.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
     disabledForm();
-    filtersDisabled();
     window.map.removePins();
     window.map.closeOpenedPopup();
     mainPin.style.left = PIN_COORD_X + 'px';
@@ -76,6 +75,7 @@
     filtersForm.reset();
     document.documentElement.scrollTop = 0;
     window.synchRoomsAndPlaces();
+    window.data.pins = [];
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
@@ -120,9 +120,7 @@
 
       if (data.length === 0) {
         window.backend.load(onSuccess, window.utils.onError);
-      } else {
-        window.mapfilters.filterPins();
-      }
+      } else {}
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
