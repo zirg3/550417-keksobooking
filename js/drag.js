@@ -120,7 +120,7 @@
 
       if (data.length === 0) {
         window.backend.load(onSuccess, window.utils.onError);
-      } else {}
+      }
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
