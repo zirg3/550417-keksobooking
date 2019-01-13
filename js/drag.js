@@ -5,6 +5,7 @@
   var address = document.querySelector('#address');
   var form = document.querySelector('.ad-form');
   var filtersForm = document.querySelector('.map__filters');
+  var DEFAULT_AVATAR_IMAGE = 'img/muffin-grey.svg';
   var PIN_COORD_X = 570;
   var PIN_COORD_Y = 375;
 
@@ -57,6 +58,18 @@
     }
   };
 
+  var deleteUploadedImages = function () {
+    window.upload.avatar.src = DEFAULT_AVATAR_IMAGE;
+    var uploadedAdImages = form.querySelectorAll('.ad-form__photo');
+    if (uploadedAdImages.length !== 0) {
+      uploadedAdImages.forEach(function (item) {
+        window.upload.uploadContainer.removeChild(item);
+      });
+      var emptyadImagesBlock = window.upload.adImagesBlock.cloneNode();
+      window.upload.uploadContainer.appendChild(emptyadImagesBlock);
+    }
+  };
+
   var deactivation = function () {
     map.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
@@ -64,6 +77,7 @@
     disabledForm();
     window.map.removePins();
     window.map.closeOpenedPopup();
+    deleteUploadedImages();
     mainPin.style.left = PIN_COORD_X + 'px';
     mainPin.style.top = PIN_COORD_Y + 'px';
     form.reset();
