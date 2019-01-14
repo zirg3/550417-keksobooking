@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var mapCardEscHandler = window.map.mapCardEscHandler;
   var APPARTMENT_TYPES = {
     flat: 'Квартира',
     bungalo: 'Бунгало',
@@ -78,6 +79,8 @@
     } else {
       cardElement.querySelector('.popup__description').textContent = appartment.offer.description;
     }
+
+    document.addEventListener('keydown', mapCardEscHandler);
 
     return cardElement;
   };

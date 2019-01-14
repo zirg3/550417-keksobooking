@@ -83,7 +83,8 @@
     form.reset();
     filtersForm.reset();
     document.documentElement.scrollTop = 0;
-    window.synchRoomsAndPlaces();
+    window.form.synchPrice();
+    window.form.synchRoomsAndPlaces();
     window.data.pins = [];
   };
 
