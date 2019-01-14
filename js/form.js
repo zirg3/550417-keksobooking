@@ -134,5 +134,8 @@
     window.drag.deactivation();
   });
 
-  window.synchRoomsAndPlaces = synchRoomsAndPlaces;
+  window.form = {
+    synchPrice: synchPrice,
+    synchRoomsAndPlaces: synchRoomsAndPlaces
+  };
 })();

@@ -15,10 +15,12 @@
 
   // Удаление
   var closeOpenedPopup = function () {
-    var oldCard = map.querySelector('.map__card');
-    if (oldCard) {
-      oldCard.remove();
+    var popup = document.querySelector('.map__card');
+    if (!popup) {
+      return;
     }
+    map.removeChild(popup);
+    document.removeEventListener('keydown', mapCardEscHandler);
   };
 
   var showCard = function (cardElement) {
@@ -44,11 +46,15 @@
     window.drag.toggleDisableAndEnableFilter();
   };
 
-  document.addEventListener('keydown', function (evt) {
+  var isEscKeycode = function (evt, action) {
     if (evt.keyCode === ESC_KEY) {
-      closeOpenedPopup();
+      action();
     }
-  });
+  };
+
+  var mapCardEscHandler = function (evt) {
+    isEscKeycode(evt, closeOpenedPopup);
+  };
 
   var removePins = function () {
     var ordinaryPins = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
@@ -58,6 +64,7 @@
   };
 
   window.map = {
+    mapCardEscHandler: mapCardEscHandler,
     closeOpenedPopup: closeOpenedPopup,
     removePins: removePins,
     renderPins: renderPins
